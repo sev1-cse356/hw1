@@ -75,6 +75,10 @@ function checkWinner($board)
 
 $winner = checkWinner($board);
 
+if ($count == 9 && $winner == null) {
+    $winner = "TIE";
+}
+
 function updateBoard($board, $index, $currentPlayer)
 {
     // Update the board at the specified index with the player's move
