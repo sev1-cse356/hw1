@@ -30,7 +30,10 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
         $cells = array_fill(0, 5, array_fill(0, 7, '.'));
     }
 
-    if (isset($_POST['board'])) {
+    if (isset($_POST['column'])) {
+        $col = intval($_POST['column']);
+        dropPiece($cells, $col, 'X');
+
         if (checkConnectWinner($cells, 'X')) {
             echo "<p>You won!</p>";
             session_destroy();
@@ -50,35 +53,24 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
                 displayConnectBoard($cells);
                 exit;
             }
+        } else {
+            echo "<p>Draw</p>";
+            session_destroy();
+            echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
+            displayConnectBoard($cells);
+            exit;
         }
-    }
-
-    if (isBoardFull($cells)) {
-        echo "<p>Draw</p>";
-        session_destroy();
-        echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-        displayConnectBoard($cells);
-        exit;
     }
 
     displayConnectBoardWithButtons($cells);
 }
 
 function processBoard($boardStr) {
-    $rows = explode('.', trim($boardStr, '.'));
-    $cells = [];
-    foreach ($rows as $row) {
-        $cells[] = explode(' ', trim($row));
-    }
-    return $cells;
+    return json_decode($boardStr, true);
 }
 
 function boardToString($cells) {
-    $rows = [];
-    foreach ($cells as $row) {
-        $rows[] = implode(' ', $row);
-    }
-    return implode('.', $rows);
+    return json_encode($cells);
 }
 
 function dropPiece(&$cells, $col, $piece) {
@@ -105,44 +97,35 @@ function checkConnectWinner($cells, $piece) {
     $cols = count($cells[0]);
 
     for ($row = 0; $row < $rows; $row++) {
-        for ($col = 0; $col <= $cols - 4; $col++) {
-            if ($cells[$row][$col] == $piece &&
-                $cells[$row][$col+1] == $piece &&
-                $cells[$row][$col+2] == $piece &&
-                $cells[$row][$col+3] == $piece) {
+        for ($col = 0; $col < $cols - 3; $col++) {
+            if ($cells[$row][$col] == $piece && $cells[$row][$col+1] == $piece &&
+                $cells[$row][$col+2] == $piece && $cells[$row][$col+3] == $piece) {
                 return true;
             }
         }
     }
 
     for ($col = 0; $col < $cols; $col++) {
-        for ($row = 0; $row <= $rows - 4; $row++) {
-            if ($cells[$row][$col] == $piece &&
-                $cells[$row+1][$col] == $piece &&
-                $cells[$row+2][$col] == $piece &&
-                $cells[$row+3][$col] == $piece) {
+        for ($row = 0; $row < $rows - 3; $row++) {
+            if ($cells[$row][$col] == $piece && $cells[$row+1][$col] == $piece &&
+                $cells[$row+2][$col] == $piece && $cells[$row+3][$col] == $piece) {
                 return true;
             }
         }
     }
 
-    for ($row = 0; $row <= $rows - 4; $row++) {
-        for ($col = 0; $col <= $cols - 4; $col++) {
-            if ($cells[$row][$col] == $piece &&
-                $cells[$row+1][$col+1] == $piece &&
-                $cells[$row+2][$col+2] == $piece &&
-                $cells[$row+3][$col+3] == $piece) {
+    for ($row = 0; $row < $rows - 3; $row++) {
+        for ($col = 0; $col < $cols - 3; $col++) {
+            if ($cells[$row][$col] == $piece && $cells[$row+1][$col+1] == $piece &&
+                $cells[$row+2][$col+2] == $piece && $cells[$row+3][$col+3] == $piece) {
                 return true;
             }
         }
     }
-
     for ($row = 3; $row < $rows; $row++) {
-        for ($col = 0; $col <= $cols - 4; $col++) {
-            if ($cells[$row][$col] == $piece &&
-                $cells[$row-1][$col+1] == $piece &&
-                $cells[$row-2][$col+2] == $piece &&
-                $cells[$row-3][$col+3] == $piece) {
+        for ($col = 0; $col < $cols - 3; $col++) {
+            if ($cells[$row][$col] == $piece && $cells[$row-1][$col+1] == $piece &&
+                $cells[$row-2][$col+2] == $piece && $cells[$row-3][$col+3] == $piece) {
                 return true;
             }
         }
@@ -151,27 +134,15 @@ function checkConnectWinner($cells, $piece) {
     return false;
 }
 
-function isBoardFull($cells) {
-    foreach ($cells[0] as $cell) {
-        if ($cell == '.') {
-            return false;
-        }
-    }
-    return true;
-}
-
 function displayConnectBoardWithButtons($cells) {
+    $boardStr = boardToString($cells);
     echo '<form action="connect.php" method="post">';
+    echo '<input type="hidden" name="board" value="'.htmlspecialchars($boardStr).'">';
     echo '<table border="1">';
     echo '<tr>';
     for ($col = 0; $col < 7; $col++) {
         if ($cells[0][$col] == '.') {
-            $newCells = $cells;
-            dropPiece($newCells, $col, 'X');
-            $boardStr = boardToString($newCells);
-            echo '<td>';
-            echo '<button type="submit" name="board" value="'.htmlspecialchars($boardStr).'">Drop</button>';
-            echo '</td>';
+            echo '<td><button type="submit" name="column" value="'.$col.'">Drop</button></td>';
         } else {
             echo '<td></td>';
         }
