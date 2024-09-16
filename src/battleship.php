@@ -60,123 +60,98 @@ if (!isset($_GET['name']) && !isset($_SESSION['name'])) {
 }
 
 function spawnShips() {
-    //handle the 2x1,3x1,4x1 ships
-    for ($i=2; $i<5; $i++){
-        $col = rand(0,6);
-        $row = rand(0,4);
+    // Handle the 2x1, 3x1, 4x1 ships
+    for ($i = 2; $i < 5; $i++) {
+        $col = rand(0, 6);
+        $row = rand(0, 4);
         $potential_ship_coords = [];
-        if (in_array([$row, $col], $_SESSION['ship_coords'])){
-            //restart the ship building for that ship
-            $i-=1;
+        
+        if (in_array([$row, $col], $_SESSION['ship_coords'])) {
+            //restart building current ship
+            $i -= 1;
             continue;
         }
-        else{
-            //available coord
-            array_push($potential_ship_coords, [$row, $col]);
-            $can_make_ship=false;
-            if(rand(0,1)){
-                //vertical
-                if($row-$i+1>=0){
-                    //it can go up enough
-                    //check if all of them are avail
-                    for($j=0;$j<$i-1;$j++){
-                        if (in_array([$row-$j-1,$col], $_SESSION['ship_coords'])){
-                            //coords taken
-                            break;
-                        }
-                        else{
-                            if($j==$i-2){
-                                //all coords are avail
-                                $can_make_ship=true;
-                                array_push($_SESSION['ship_coords'], [$row, $col]);
-                                for($k=0;$k<$i-1;$k++){
-                                    //add all the avail coords into
-                                    array_push($_SESSION['ship_coords'], [$row-$k-1,$col]);
-                                }
 
-                            }
-                        }
+        $can_make_ship = false;
+        if (rand(0, 1)) { 
+            // Vertical building
+            if ($row - $i + 1 >= 0) {
+                //There is potential space to build *UP*
+                $can_make_ship = true;
+                //Now check if the spaces are taken
+                for ($j = 0; $j < $i; $j++) {
+                    if (in_array([$row - $j, $col], $_SESSION['ship_coords'])) {
+                        //Can't build here
+                        $can_make_ship = false;
+                        break;
                     }
                 }
-                if($row+$i-1<=4 && !$can_make_ship){
-                    //it can go down enough
-                    //check if all of them are avail
-                    for($j=0;$j<$i-1;$j++){
-                        if(in_array([$row+$j+1, $col], $_SESSION['ship_coords'])){
-                            //coords taken
-                            break;
-                        }
-                        else{
-                            if($j==$i-2){
-                                //all coords are avail
-                                $can_make_ship=true;
-                                array_push($_SESSION['ship_coords'], [$row, $col]);
-                                for($k=0;$k<$i-1;$k++){
-                                    //add all the avail coords into
-                                    array_push($_SESSION['ship_coords'], [$row+$k+1,$col]);
-                                }
-                            }
-                        }
+                if ($can_make_ship) {
+                    for ($j = 0; $j < $i; $j++) {
+                        array_push($_SESSION['ship_coords'], [$row - $j, $col]);
                     }
                 }
-
-                if(!$can_make_ship){
-                    $i-=1;
-                    continue;    
-                }
-            }else{
-                //horizontal
-                if($col-$i+1>0){
-                    //if can go left enough
-                    for($j=0;$j<$i-1;$j++){
-                        if(in_array([$row,$col-$j-1], $_SESSION['ship_coords'])){
-                            //coords taken
-                            break;
-                        }
-                        else{
-                            if($j==$i-2){
-                                //all coords avail
-                                $can_make_ship=true;
-                                array_push($_SESSION['ship_coords'], [$row, $col]);
-                                for($k=0;$k<$i-1;$k++){
-                                    //add all the avail coords into
-                                    array_push($_SESSION['ship_coords'], [$row,$col-$k-1]);
-                                }
-                            }
-                        }
+            }
+            if (!$can_make_ship && $row + $i - 1 <= 4) {
+                //There is potential space to build *DOWN*
+                $can_make_ship = true;
+                //Now check if the spaces are taken
+                for ($j = 0; $j < $i; $j++) {
+                    if (in_array([$row + $j, $col], $_SESSION['ship_coords'])) {
+                        //Can't build here
+                        $can_make_ship = false;
+                        break;
                     }
                 }
-                if ($row+$i-1<=4){
-                    //it can go right enough
-                    for($j=0;$j<$i-1;$j++){
-                        if(in_array([$row,$col+$j+1],$_SESSION['ship_coords'])){
-                            //coords taken
-                            break;
-                        }
-                        else{
-                            if($j==$i-2){
-                                //all coords avail
-                                $can_make_ship=true;
-                                array_push($_SESSION['ship_coords'], [$row, $col]);
-                                for($k=0;$k<$i-1;$k++){
-                                    //add all the avail coords into
-                                    array_push($_SESSION['ship_coords'],[$row,$col+$k+1]);
-                                }
-                            }
-                        }
+                if ($can_make_ship) {
+                    for ($j = 0; $j < $i; $j++) {
+                        array_push($_SESSION['ship_coords'], [$row + $j, $col]);
                     }
                 }
-
-                if(!$can_make_ship){
-                    $i-=1;
-                    continue;    
+            }
+        } else { 
+            // Horizontal building
+            if ($col - $i + 1 >= 0) { 
+                //There is potential space to build *LEFT*
+                $can_make_ship = true;
+                for ($j = 0; $j < $i; $j++) {
+                    if (in_array([$row, $col - $j], $_SESSION['ship_coords'])) {
+                        //Can't build here
+                        $can_make_ship = false;
+                        break;
+                    }
+                }
+                if ($can_make_ship) {
+                    for ($j = 0; $j < $i; $j++) {
+                        array_push($_SESSION['ship_coords'], [$row, $col - $j]);
+                    }
+                }
+            }
+            if (!$can_make_ship && $col + $i - 1 <= 6) { 
+                //There is potential space to build *RIGHT*
+                $can_make_ship = true;
+                for ($j = 0; $j < $i; $j++) {
+                    if (in_array([$row, $col + $j], $_SESSION['ship_coords'])) {
+                        //Can't build here
+                        $can_make_ship = false;
+                        break;
+                    }
+                }
+                if ($can_make_ship) {
+                    for ($j = 0; $j < $i; $j++) {
+                        array_push($_SESSION['ship_coords'], [$row, $col + $j]);
+                    }
                 }
             }
         }
-    }
-    
 
+        // If no valid position found, retry the ship placement
+        if (!$can_make_ship) {
+            $i -= 1;
+        }
+    }
 }
+
 
 function drawBoard() {
     echo '<table>';
