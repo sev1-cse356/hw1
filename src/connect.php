@@ -28,6 +28,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
         $cells = processJsonBoard($boardJson);
 
         if (checkConnectWinner($cells, 'X')) {
+            displayConnectBoard($cells);
             echo "<h2>You won!</h2>";
             if (ob_get_length()) {
                 ob_end_flush();
@@ -35,7 +36,6 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             flush();
             session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            displayConnectBoard($cells);
             exit;
         }
 
@@ -44,6 +44,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             dropPiece($cells, $aiCol, 'O');
 
             if (checkConnectWinner($cells, 'O')) {
+                displayConnectBoard($cells);
                 echo "<h2>I won!</h2>";
                 if (ob_get_length()) {
                     ob_end_flush();
@@ -51,22 +52,21 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
                 flush();
                 session_destroy();
                 echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-                displayConnectBoard($cells);
                 exit;
             }
         } else {
+            displayConnectBoard($cells);
             echo "<h2>Draw</h2>";
             session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            displayConnectBoard($cells);
             exit;
         }
 
         if (isBoardFull($cells)) {
+            displayConnectBoard($cells);
             echo "<h2>Draw</h2>";
             session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            displayConnectBoard($cells);
             exit;
         }
     } else {
