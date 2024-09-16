@@ -81,7 +81,7 @@ function processJsonBoard($boardJson) {
 
 function boardToJson($cells) {
     $json = json_encode($cells); 
-    echo '<pre>Board to JSON: ' . htmlspecialchars($json) . '</pre>'; 
+    //echo '<pre>Board to JSON: ' . htmlspecialchars($json) . '</pre>'; 
     return $json;
 }
 
