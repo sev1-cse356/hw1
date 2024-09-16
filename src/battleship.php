@@ -103,7 +103,7 @@ function drawBoard() {
             }
             echo '
                 <td>
-                <button class="battleship_cell" type="submit" name="move" value="' . $row . ',' . $col . '">
+                <button class="battleship_cell" type="submit" name="move" value="' . $row . ',' . $col . '" onclick="this.disabled=true;">
                     ' . htmlspecialchars($displayValue) . '
                 </button>
                 </td>

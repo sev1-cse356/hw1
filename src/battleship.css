@@ -1,0 +1,10 @@
+.battleship_cell {
+    background-color: white;
+    height: 100px;
+    width: 100px;
+    transition-duration: 0.2s;
+}
+
+.battleship_cell:hover {
+    background-color: rgb(220, 220, 220);
+}
