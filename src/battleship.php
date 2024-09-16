@@ -30,6 +30,8 @@ if (!isset($_GET['name']) && !isset($_SESSION['name'])) {
         $_SESSION['num_cols'] = 7;
         $_SESSION['moves_left'] = ceil($_SESSION['num_rows'] * $_SESSION['num_cols'] * 0.6);
         $_SESSION['board'] = array_fill(0, $_SESSION['num_rows'], array_fill(0, $_SESSION['num_cols'], 0));
+        
+        $_SESSION['ship_coords'] = [];
     }
     
     $date = date('Y-m-d H:i:s');
@@ -51,6 +53,36 @@ if (!isset($_GET['name']) && !isset($_SESSION['name'])) {
 }
 
 function spawnShips() {
+    //handle the 2x1,3x1,4x1 ships
+    for ($i=2; $i<5; $i++){
+        $col = rand(0,6);
+        $row = rand(0,4);
+        $potential_ship_coords = [];
+        if (in_array([$row, $col], $_SESSION['ship_coords'])){
+            //restart the ship building for that ship
+            $i-=1;
+            continue;
+        }
+        else{
+            //available coord
+            array_push($potential_ship_coords, [$row, $col]);
+            if(rand(0,1)){
+                //vertical
+                if($row-$i+1>=0){
+                    //it can go up enough
+                    //check if all of them are avail
+                }
+                else if($row+$i-1<=4){
+                    //it can go down enough
+                    //check if all of them are avail
+
+                }
+            }else{
+                //horizontal
+            }
+        }
+    }
+    
 
 }
 
