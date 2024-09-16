@@ -66,19 +66,104 @@ function spawnShips() {
         else{
             //available coord
             array_push($potential_ship_coords, [$row, $col]);
+            $can_make_ship=false;
             if(rand(0,1)){
                 //vertical
                 if($row-$i+1>=0){
                     //it can go up enough
                     //check if all of them are avail
+                    for($j=0;$j<$i-1;$j++){
+                        if (in_array([$row-$j-1,$col], $_SESSION['ship_coords'])){
+                            //coords taken
+                            break;
+                        }
+                        else{
+                            if($j==$i-2){
+                                //all coords are avail
+                                $can_make_ship=true;
+                                array_push($_SESSION['ship_coords'], [$row, $col]);
+                                for($k=0;$k<$i-1;$k++){
+                                    //add all the avail coords into
+                                    array_push($_SESSION['ship_coords'], [$row-$k-1,$col]);
+                                }
+
+                            }
+                        }
+                    }
                 }
-                else if($row+$i-1<=4){
+                if($row+$i-1<=4 && !$can_make_ship){
                     //it can go down enough
                     //check if all of them are avail
+                    for($j=0;$j<$i-1;$j++){
+                        if(in_array([$row+$j+1, $col], $_SESSION['ship_coords'])){
+                            //coords taken
+                            break;
+                        }
+                        else{
+                            if($j==$i-2){
+                                //all coords are avail
+                                $can_make_ship=true;
+                                array_push($_SESSION['ship_coords'], [$row, $col]);
+                                for($k=0;$k<$i-1;$k++){
+                                    //add all the avail coords into
+                                    array_push($_SESSION['ship_coords'], [$row+$k+1,$col]);
+                                }
+                            }
+                        }
+                    }
+                }
 
+                if(!$can_make_ship){
+                    $i-=1;
+                    continue;    
                 }
             }else{
                 //horizontal
+                if($col-$i+1>0){
+                    //if can go left enough
+                    for($j=0;$j<$i-1;$j++){
+                        if(in_array([$row,$col-$j-1], $_SESSION['ship_coords'])){
+                            //coords taken
+                            break;
+                        }
+                        else{
+                            if($j==$i-2){
+                                //all coords avail
+                                $can_make_ship=true;
+                                array_push($_SESSION['ship_coords'], [$row, $col]);
+                                for($k=0;$k<$i-1;$k++){
+                                    //add all the avail coords into
+                                    array_push($_SESSION['ship_coords'], [$row,$col-$k-1]);
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($row+$i-1<=4){
+                    //it can go right enough
+                    for($j=0;$j<$i-1;$j++){
+                        if(in_array([$row,$col+$j+1],$_SESSION['ship_coords'])){
+                            //coords taken
+                            break;
+                        }
+                        else{
+                            if($j==$i-2){
+                                //all coords avail
+                                $can_make_ship=true;
+                                array_push($_SESSION['ship_coords'], [$row, $col]);
+                                for($k=0;$k<$i-1;$k++){
+                                    //add all the avail coords into
+                                    array_push($_SESSION['ship_coords'],[$row,$col+$k+1]);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if(!$can_make_ship){
+                    $i-=1;
+                    continue;    
+                }
             }
         }
     }
