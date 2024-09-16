@@ -64,7 +64,6 @@ function spawnShips() {
     for ($i = 2; $i < 5; $i++) {
         $col = rand(0, 6);
         $row = rand(0, 4);
-        $potential_ship_coords = [];
         
         if (in_array([$row, $col], $_SESSION['ship_coords'])) {
             //restart building current ship
@@ -72,38 +71,38 @@ function spawnShips() {
             continue;
         }
 
-        $can_make_ship = false;
+        $can_build_ship = false;
         if (rand(0, 1)) { 
             // Vertical building
             if ($row - $i + 1 >= 0) {
                 //There is potential space to build *UP*
-                $can_make_ship = true;
+                $can_build_ship = true;
                 //Now check if the spaces are taken
                 for ($j = 0; $j < $i; $j++) {
                     if (in_array([$row - $j, $col], $_SESSION['ship_coords'])) {
                         //Can't build here
-                        $can_make_ship = false;
+                        $can_build_ship = false;
                         break;
                     }
                 }
-                if ($can_make_ship) {
+                if ($can_build_ship) {
                     for ($j = 0; $j < $i; $j++) {
                         array_push($_SESSION['ship_coords'], [$row - $j, $col]);
                     }
                 }
             }
-            if (!$can_make_ship && $row + $i - 1 <= 4) {
+            if (!$can_build_ship && $row + $i - 1 <= 4) {
                 //There is potential space to build *DOWN*
-                $can_make_ship = true;
+                $can_build_ship = true;
                 //Now check if the spaces are taken
                 for ($j = 0; $j < $i; $j++) {
                     if (in_array([$row + $j, $col], $_SESSION['ship_coords'])) {
                         //Can't build here
-                        $can_make_ship = false;
+                        $can_build_ship = false;
                         break;
                     }
                 }
-                if ($can_make_ship) {
+                if ($can_build_ship) {
                     for ($j = 0; $j < $i; $j++) {
                         array_push($_SESSION['ship_coords'], [$row + $j, $col]);
                     }
@@ -113,31 +112,31 @@ function spawnShips() {
             // Horizontal building
             if ($col - $i + 1 >= 0) { 
                 //There is potential space to build *LEFT*
-                $can_make_ship = true;
+                $can_build_ship = true;
                 for ($j = 0; $j < $i; $j++) {
                     if (in_array([$row, $col - $j], $_SESSION['ship_coords'])) {
                         //Can't build here
-                        $can_make_ship = false;
+                        $can_build_ship = false;
                         break;
                     }
                 }
-                if ($can_make_ship) {
+                if ($can_build_ship) {
                     for ($j = 0; $j < $i; $j++) {
                         array_push($_SESSION['ship_coords'], [$row, $col - $j]);
                     }
                 }
             }
-            if (!$can_make_ship && $col + $i - 1 <= 6) { 
+            if (!$can_build_ship && $col + $i - 1 <= 6) { 
                 //There is potential space to build *RIGHT*
-                $can_make_ship = true;
+                $can_build_ship = true;
                 for ($j = 0; $j < $i; $j++) {
                     if (in_array([$row, $col + $j], $_SESSION['ship_coords'])) {
                         //Can't build here
-                        $can_make_ship = false;
+                        $can_build_ship = false;
                         break;
                     }
                 }
-                if ($can_make_ship) {
+                if ($can_build_ship) {
                     for ($j = 0; $j < $i; $j++) {
                         array_push($_SESSION['ship_coords'], [$row, $col + $j]);
                     }
@@ -146,7 +145,7 @@ function spawnShips() {
         }
 
         // If no valid position found, retry the ship placement
-        if (!$can_make_ship) {
+        if (!$can_build_ship) {
             $i -= 1;
         }
     }
