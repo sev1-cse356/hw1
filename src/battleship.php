@@ -1,5 +1,6 @@
 <?php 
 session_start();
+session_destroy();
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +46,12 @@ if (!isset($_GET['name']) && !isset($_SESSION['name'])) {
     //set the ship locations randomly
     spawnShips();
 
-    echo "<p>Ship coords: {$_SESSION['ship_coords']}</p><br>";
+    $shipCoordsFormatted = array_map(function($coord) {
+        return "($coord[0], $coord[1])";
+    }, $_SESSION['ship_coords']);
+    
+    echo "<p>Ship coords: " . implode(', ', $shipCoordsFormatted) . "</p><br>";
+    
     //after setting ship locations, now the player moves max 21 times
     // while ($_SESSION['moves_left'] > 0) {
 
