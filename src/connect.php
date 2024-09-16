@@ -74,7 +74,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
 function processJsonBoard($boardJson) {
     $cells = json_decode($boardJson, true); 
     if (is_null($cells)) {
-        $cells = array_fill(0, 5, array_fill(0, 7, '.'));
+        $cells = array_fill(0, 4, array_fill(0, 6, '.'));
     }
     return $cells;
 }
