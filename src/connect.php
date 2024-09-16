@@ -29,7 +29,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
 
         // Check if the player has won
         if (checkConnectWinner($cells, 'X')) {
-            echo "<p>You won!</p>";
+            echo "<p>I won!</p>";
             session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
             displayConnectBoard($cells);
@@ -43,7 +43,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
 
             // Check if AI has won
             if (checkConnectWinner($cells, 'O')) {
-                echo "<p>I won!</p>";
+                echo "<p>You won!</p>";
                 session_destroy();
                 echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
                 displayConnectBoard($cells);
