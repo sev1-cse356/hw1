@@ -45,10 +45,11 @@ if (!isset($_GET['name']) && !isset($_SESSION['name'])) {
     //set the ship locations randomly
     spawnShips();
 
+    echo "<p>Ship coords: {$_SESSION['ship_coords']}</p><br>";
     //after setting ship locations, now the player moves max 21 times
-    while ($_SESSION['moves_left'] > 0) {
+    // while ($_SESSION['moves_left'] > 0) {
 
-    }
+    // }
 
 }
 
@@ -159,7 +160,7 @@ function spawnShips() {
                         }
                     }
                 }
-                
+
                 if(!$can_make_ship){
                     $i-=1;
                     continue;    
