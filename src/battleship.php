@@ -40,8 +40,19 @@ if (!isset($_GET['name']) && !isset($_SESSION['name'])) {
     
     drawBoard();
 
+    //set the ship locations randomly
+    spawnShips();
+
+    //after setting ship locations, now the player moves max 21 times
+    while ($_SESSION['moves_left'] > 0) {
+
+    }
+
 }
 
+function spawnShips() {
+
+}
 
 function drawBoard() {
     echo '<table>';
