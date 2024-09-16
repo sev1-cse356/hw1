@@ -27,41 +27,46 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
         $boardJson = $_POST['board'];
         $cells = processJsonBoard($boardJson);
 
-        // Check if the player has won
         if (checkConnectWinner($cells, 'X')) {
-            echo "<p>I won!</p>";
+            displayConnectBoard($cells);
+            echo "<h2>You won!</h2>";
+            if (ob_get_length()) {
+                ob_end_flush();
+            }
+            flush();
             session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            displayConnectBoard($cells);
             exit;
         }
 
-        // AI move
         $aiCol = aiSelectColumn($cells);
         if ($aiCol !== null) {
             dropPiece($cells, $aiCol, 'O');
 
-            // Check if AI has won
             if (checkConnectWinner($cells, 'O')) {
-                echo "<p>You won!</p>";
+                displayConnectBoard($cells);
+                echo "<h2>I won!</h2>";
+                if (ob_get_length()) {
+                    ob_end_flush();
+                }
+                flush();
                 session_destroy();
                 echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-                displayConnectBoard($cells);
                 exit;
             }
         } else {
-            echo "<p>Draw</p>";
+            displayConnectBoard($cells);
+            echo "<h2>Draw</h2>";
             session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            displayConnectBoard($cells);
             exit;
         }
 
         if (isBoardFull($cells)) {
-            echo "<p>Draw</p>";
+            displayConnectBoard($cells);
+            echo "<h2>Draw</h2>";
             session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            displayConnectBoard($cells);
             exit;
         }
     } else {

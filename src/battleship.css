@@ -1,4 +1,5 @@
 .battleship_cell {
+    font-size: large;
     background-color: white;
     height: 100px;
     width: 100px;
@@ -7,4 +8,8 @@
 
 .battleship_cell:hover {
     background-color: rgb(220, 220, 220);
+}
+
+.battleship_cell:disabled:hover {
+    background-color: white;
 }
