@@ -79,6 +79,12 @@ function spawnShips() {
                 }
             }else{
                 //horizontal
+                if($col-$i+1>0){
+                    //if can go left enough
+                }
+                else if ($row+$i-1<=4){
+                    //it can go right enough
+                }
             }
         }
     }
