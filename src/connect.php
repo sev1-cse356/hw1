@@ -34,7 +34,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
                 ob_end_flush();
             }
             flush();
-            session_destroy();
+            //session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
             exit;
         }
@@ -50,14 +50,14 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
                     ob_end_flush();
                 }
                 flush();
-                session_destroy();
+                //session_destroy();
                 echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
                 exit;
             }
         } else {
             displayConnectBoard($cells);
             echo "<h2>Draw</h2>";
-            session_destroy();
+            //session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
             exit;
         }
@@ -65,7 +65,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
         if (isBoardFull($cells)) {
             displayConnectBoard($cells);
             echo "<h2>Draw</h2>";
-            session_destroy();
+            //session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
             exit;
         }
