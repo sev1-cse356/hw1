@@ -33,7 +33,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             echo "You won!";
             echo "<h2>You won!</h2>";
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            ob_end_flush();
+            ob_flush();
             flush();
             session_destroy();
             exit;
@@ -48,7 +48,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
                 echo "I won!";
                 echo "<h2>I won!</h2>";
                 echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-                ob_end_flush();
+                ob_flush();
                 flush();
                 session_destroy();
                 exit;
@@ -58,7 +58,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             echo "Draw";
             echo "<h2>Draw</h2>";
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            ob_end_flush();
+            ob_flush();
             flush();
             session_destroy();
             exit;
@@ -69,7 +69,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             echo "Draw";
             echo "<h2>Draw</h2>";
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            ob_end_flush();
+            ob_flush();
             flush();
             session_destroy();
             exit;
