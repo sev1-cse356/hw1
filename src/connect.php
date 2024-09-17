@@ -36,6 +36,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             ob_flush();
             flush();
             session_destroy();
+            //test
             exit;
         }
 
