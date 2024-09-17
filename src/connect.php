@@ -25,8 +25,9 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
     echo "<p>Hello $name, $date</p>";
 
     if (isset($_POST['board'])) {
-        $boardJson = $_POST['board'];
-        $cells = processJsonBoard($boardJson);
+        $boardStr = $_POST['board'];
+        $cells = parseBoardStr($boardStr);
+
 
         if (checkConnectWinner($cells, 'X')) {
             displayConnectBoard($cells);
@@ -82,19 +83,54 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
     displayConnectBoardWithButtons($cells);
 }
 
-function processJsonBoard($boardJson) {
-    $cells = json_decode($boardJson, true); 
-    if (is_null($cells)) {
-        $cells = array_fill(0, 4, array_fill(0, 6, '.'));
+
+
+function parseBoardStr($boardStr) {
+    $cells = array_fill(0, 5, array_fill(0, 7, '.'));
+    
+    $row = 0;
+    $col = 0;
+    
+    $whitespaceCounter = 0;
+
+    for ($i = 0; $i < strlen($boardStr); $i++) {
+        $char = $boardStr[$i];
+
+        if ($char === '.') {
+            $row++;
+            $col = 0; 
+        }
+        elseif ($char === ' ') {
+            $col++;
+        }
+        elseif ($char === 'X' || $char === 'O') {
+            $cells[$row][$col] = $char;
+ 
+
+        }
     }
+
     return $cells;
 }
 
-function boardToJson($cells) {
-    $json = json_encode($cells); 
-    //echo '<pre>Board to JSON: ' . htmlspecialchars($json) . '</pre>'; 
-    return $json;
+
+
+function generateBoardStr($cells) {
+    $boardStr = '';
+    foreach ($cells as $row) {
+        foreach ($row as $cell) {
+            if ($cell == '.') {
+                $boardStr .= ' ';  
+            } else {
+                $boardStr .= $cell; 
+                $boardStr .= ' ';
+            }
+        }
+        $boardStr .= '.';  
+    }
+    return $boardStr;
 }
+
 
 function dropPiece(&$cells, $col, $piece) {
     for ($row = count($cells) - 1; $row >= 0; $row--) {
@@ -184,10 +220,10 @@ function displayConnectBoardWithButtons($cells) {
         if ($cells[0][$col] == '.') {
             $newCells = $cells;
             dropPiece($newCells, $col, 'X');
-            $boardJson = boardToJson($newCells); 
-
+            $boardStr = generateBoardStr($newCells);
+            echo '<pre>BoardStr for column ' . $col . ': ' . htmlspecialchars($boardStr) . '</pre>';
             echo '<td>';
-            echo '<button type="submit" name="board" value="'.htmlspecialchars($boardJson).'">Drop</button>';
+            echo '<button type="submit" name="board" value="' . $boardStr . '">Drop</button>';
             echo '</td>';
         } else {
             echo '<td></td>';
@@ -219,6 +255,8 @@ function displayConnectBoard($cells) {
     }
     echo '</table>';
 }
+
+
 ?>
 </body>
 </html>
