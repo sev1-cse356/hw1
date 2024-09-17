@@ -1,7 +1,7 @@
 <?php
 header('X-CSE356: 66d0f3556424d34b6b77c48f'); 
 session_start();
-ob_start();
+//ob_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,8 +33,8 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             echo "You won!";
             echo "<h2>You won!</h2>";
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            ob_flush();
-            flush();
+            // ob_flush();
+            // flush();
             session_destroy();
             //test
             exit;
@@ -49,8 +49,8 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
                 echo "I won!";
                 echo "<h2>I won!</h2>";
                 echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-                ob_flush();
-                flush();
+                // ob_flush();
+                // flush();
                 session_destroy();
                 exit;
             }
@@ -59,8 +59,8 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             echo "Draw";
             echo "<h2>Draw</h2>";
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            ob_flush();
-            flush();
+            // ob_flush();
+            // flush();
             session_destroy();
             exit;
         }
@@ -70,8 +70,8 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             echo "Draw";
             echo "<h2>Draw</h2>";
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            ob_flush();
-            flush();
+            // ob_flush();
+            // flush();
             session_destroy();
             exit;
         }
