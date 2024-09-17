@@ -1,6 +1,7 @@
 <?php
 header('X-CSE356: 66d0f3556424d34b6b77c48f'); 
 session_start();
+ob_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,13 +31,11 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
         if (checkConnectWinner($cells, 'X')) {
             displayConnectBoard($cells);
             echo "<h2>You won!</h2>";
-            if (ob_get_length()) {
-                ob_end_flush();
-            }
-            flush();
-            //session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            //exit;
+            ob_end_flush();
+            flush();
+            session_destroy();
+            exit;
         }
 
         $aiCol = aiSelectColumn($cells);
@@ -46,28 +45,30 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             if (checkConnectWinner($cells, 'O')) {
                 displayConnectBoard($cells);
                 echo "<h2>I won!</h2>";
-                if (ob_get_length()) {
-                    ob_end_flush();
-                }
-                flush();
-                //session_destroy();
                 echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-                //exit;
+                ob_end_flush();
+                flush();
+                session_destroy();
+                exit;
             }
         } else {
             displayConnectBoard($cells);
             echo "<h2>Draw</h2>";
-            //session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
+            ob_end_flush();
+            flush();
+            session_destroy();
             exit;
         }
 
         if (isBoardFull($cells)) {
             displayConnectBoard($cells);
             echo "<h2>Draw</h2>";
-            //session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            //exit;
+            ob_end_flush();
+            flush();
+            session_destroy();
+            exit;
         }
     } else {
         $cells = array_fill(0, 5, array_fill(0, 7, '.'));
