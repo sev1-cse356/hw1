@@ -36,7 +36,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             flush();
             //session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            exit;
+            //exit;
         }
 
         $aiCol = aiSelectColumn($cells);
@@ -52,7 +52,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
                 flush();
                 //session_destroy();
                 echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-                exit;
+                //exit;
             }
         } else {
             displayConnectBoard($cells);
@@ -67,7 +67,7 @@ if (!isset($_POST['name']) && !isset($_SESSION['name'])) {
             echo "<h2>Draw</h2>";
             //session_destroy();
             echo '<form action="connect.php" method="post"><button type="submit">Play again</button></form>';
-            exit;
+            //exit;
         }
     } else {
         $cells = array_fill(0, 5, array_fill(0, 7, '.'));
