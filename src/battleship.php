@@ -61,14 +61,14 @@ function drawBoard() {
 
     if ($_SESSION['game_over']) {
         if ($_SESSION['user_win']) {
-            echo "<h3>You Win!</h3>";
+            echo "<h3>You win!</h3>";
         } else {
-            echo "<h3>You Lose!</h3>";
+            echo "<h3>You lose!</h3>";
         }
         echo '
             <p>Do you want to play again?</p>
             <form action="battleship.php" method="POST"> 
-                <button type="submit" name="play_again">Play Again</button>
+                <button type="submit" name="play_again">Play again</button>
             </form>
         ';
     }
