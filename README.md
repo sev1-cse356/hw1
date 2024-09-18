@@ -14,3 +14,20 @@ Description
 6. Similar to the above, create a /battleship.php page for a one-sided Battleship game which also asks for a name before allowing to play the game (and shows a greeting with the time once a name is provided). The board should be 5 rows by 7 columns. Instead of maintaining all state in the client and submitting it to the server, maintain all state in a server-side session. At the start of a game, the server should select secret locations of three ships, 2x1, 3x1, and 4x1, in non-overlapping horizontal or vertical directions. The top of the page should also include the string: "Moves left: (integer)" where the integer is the number of remaining moves. The number of moves should start out as being ceil($columns * $rows * 0.60).  During gameplay, cells where moves are made should reflect the result: 'X' for a hit, 'O' for a miss, and '?' for an untried cell (only visible when the game is not over).  For making moves, instead of a "board" parameter, submit a "move" parameter whose value is 0-indexed $row,$col of the move being made. The game is over if (a) the player has run out of moves (indicate this by "You lose!") or (b) all of the ships are sunk (indicate this by "You win!"). When the game is over, a "Play again" button should be shown.
 
 Note: All responses must contain the header field X-CSE356 with the value containing the submission ID (click on 'Copy ID' below to get it).
+
+Grading completed. Score: 10
+
+Found form with action attribute = 0.5pt
+Name and formatted grid returned correctly = 0.5pt
+/ttt.php endpoint returned correct results for win and lost cases = 0.5pts
+/ttt.php endpoint returned correct results for tied case = 0.5pts
+Found form with action attribute = 0.5pt
+Name and number of buttons returned correctly = 0.5pt
+Number of buttons returned correctly after few moves = 1pt
+Winner displayed correctly = 1pt
+Winner displayed correctly in a lose condition = 1pt
+Found form with action attribute = 1pt
+Name returned correctly = 1pt
+Name returned correctly = 1pt
+'You Lose!' text is present
+'Play Again' button is present = 1pt
