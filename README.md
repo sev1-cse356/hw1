@@ -15,6 +15,8 @@ Description
 
 Note: All responses must contain the header field X-CSE356 with the value containing the submission ID (click on 'Copy ID' below to get it).
 
+------------------------------
+
 Grading completed. Score: 10
 
 Found form with action attribute = 0.5pt
