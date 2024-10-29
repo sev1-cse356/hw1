@@ -19,17 +19,17 @@ Note: All responses must contain the header field X-CSE356 with the value contai
 
 Grading completed. Score: 10
 
-Found form with action attribute = 0.5pt
-Name and formatted grid returned correctly = 0.5pt
-/ttt.php endpoint returned correct results for win and lost cases = 0.5pts
-/ttt.php endpoint returned correct results for tied case = 0.5pts
-Found form with action attribute = 0.5pt
-Name and number of buttons returned correctly = 0.5pt
-Number of buttons returned correctly after few moves = 1pt
-Winner displayed correctly = 1pt
-Winner displayed correctly in a lose condition = 1pt
-Found form with action attribute = 1pt
-Name returned correctly = 1pt
-Name returned correctly = 1pt
-'You Lose!' text is present
-'Play Again' button is present = 1pt
+Found form with action attribute = 0.5pt <br/>
+Name and formatted grid returned correctly = 0.5pt <br/>
+/ttt.php endpoint returned correct results for win and lost cases = 0.5pts <br/>
+/ttt.php endpoint returned correct results for tied case = 0.5pts <br/>
+Found form with action attribute = 0.5pt <br/>
+Name and number of buttons returned correctly = 0.5pt <br/>
+Number of buttons returned correctly after few moves = 1pt <br/>
+Winner displayed correctly = 1pt <br/>
+Winner displayed correctly in a lose condition = 1pt <br/>
+Found form with action attribute = 1pt <br/>
+Name returned correctly = 1pt <br/>
+Name returned correctly = 1pt <br/>
+'You Lose!' text is present <br/>
+'Play Again' button is present = 1pt <br/>
